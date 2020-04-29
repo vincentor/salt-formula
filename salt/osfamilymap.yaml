@@ -22,6 +22,7 @@
 Debian:
   pkgrepo: 'deb http://repo.saltstack.com/{{ py_ver_repr or 'apt' }}/{{ osfamily_lower }}/{{ osmajorrelease }}/amd64/{{ salt_release }} {{ oscodename }} main'
   key_url: 'https://repo.saltstack.com/{{ py_ver_repr or 'apt' }}/{{ osfamily_lower }}/{{ osmajorrelease }}/amd64/{{ salt_release }}/SALTSTACK-GPG-KEY.pub'
+  repomgr: 'python-apt'
   libgit2: libgit2-22
   pyinotify: python-pyinotify
   gitfs:
