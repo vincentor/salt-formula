@@ -4,6 +4,11 @@
 
   {%- if salt_settings.pkgrepo %}
 
+install_require_pkgs:
+  pkg.installed:
+    - names:
+      - python-apt
+
 include:
   - .{{ grains['os_family']|lower }}
 
