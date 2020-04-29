@@ -3,28 +3,28 @@
 
 include:
   - salt.pkgrepo
-      {%- if salt.config.get('salt_formulas:list') %}
+      {%- if salt.pillar.get("salt_formulas_install", False) or salt.pillar.get('salt_formulas:install', False) %}
   - salt.formulas
       {%- endif %}
-      {%- if salt.config.get('salt:master')|length > 1 %}
+      {%- if salt.pillar.get("salt_master_install", False) or salt.pillar.get('salt:master:install', False)%}
   - salt.master
       {%- endif %}
-      {%- if salt.config.get('salt:cloud')|length > 1 %}
+      {%- if salt.pillar.get("salt_master_install", False) or salt.pillar.get('salt:cloud', False) %}
   - salt.cloud
       {%- endif %}
-      {%- if salt.config.get('salt:ssh_roster') %}
+      {%- if salt.pillar.get("salt_ssh_roster_install", False) or salt.pillar.get('salt:ssh_roster', False) %}
   - salt.ssh
       {%- endif %}
-      {%- if salt.config.get('salt:minion')|length > 1 %}
-          {%- if salt.config.get('salt:minion:master_type') %}
+      {%- if salt.pillar.get("salt_minion_install", False) or salt.pillar.get('salt:minion:install', False) %}
+          {%- if salt.pillar.get("salt_minion_master_type", True) or salt.pillar.get('salt:minion:master_type', True) %}
   - salt.minion
           {%- else %}
   - salt.standalone
           {%- endif %}
       {%- endif %}
-      {%- if salt.config.get('salt:api') %}
+      {%- if salt.pillar.get('salt:api:install', False) %}
   - salt.api
       {%- endif %}
-      {%- if salt.config.get('salt:syndic') %}
+      {%- if salt.pillar.get('salt:syndic:install', False) %}
   - salt.syndic
       {%- endif %}
