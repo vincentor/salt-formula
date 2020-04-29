@@ -2,6 +2,11 @@
 # vim: ft=sls
 {% from "salt/map.jinja" import salt_settings with context %}
 
+install_require_pkgs:
+  pkg.installed:
+    - names:
+      - python-apt
+
 salt-pkgrepo-install-saltstack-debian:
   pkgrepo.managed:
     - humanname: SaltStack Debian Repo
@@ -12,3 +17,5 @@ salt-pkgrepo-install-saltstack-debian:
     # Order: 1 because we can't put a require_in on "pkg: salt-{master,minion}"
     # because we don't know if they are used.
     - order: 1
+    - require:
+      - pkg: install_require_pkgs

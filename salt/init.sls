@@ -2,6 +2,7 @@
 # vim: ft=sls
 
 include:
+  - salt.custom
   - salt.pkgrepo
       {%- if salt['pillar.get']("salt_formulas_install", False) or salt['pillar.get']('salt_formulas:install', False) %}
   - salt.formulas
