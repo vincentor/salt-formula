@@ -54,10 +54,8 @@ salt-minion:
       - cmd: remove-macpackage-salt
   {%- elif grains.os != 'MacOS' and "workaround https://github.com/saltstack/salt/issues/49348" %}
   pkg.installed:
-    - name: {{ salt_settings.salt_minion }}
-  {%- if salt_settings.version %}
-    - version: {{ salt_settings.version }}
-  {%- endif %}
+    - pkgs:
+      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
 {% if salt_settings.minion_service_details.state != 'ignore' %}
     - require_in:
       - service: salt-minion

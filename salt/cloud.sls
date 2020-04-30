@@ -20,10 +20,8 @@ salt-cloud-pip-packages:
 {% if salt_settings.install_packages %}
 salt-cloud:
   pkg.installed:
-    - name: {{ salt_settings.salt_cloud }}
-    {%- if salt_settings.version is defined %}
-    - version: {{ salt_settings.version }}
-    {%- endif %}
+    - pkgs:
+      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
     {%- if salt_settings.use_pip %}
     - require:
       - pip: salt-cloud-pip-packages

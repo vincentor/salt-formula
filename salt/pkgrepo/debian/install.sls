@@ -6,6 +6,7 @@ install_require_pkgs:
   pkg.installed:
     - names:
       - python-apt
+    - order: 1
 
 salt-pkgrepo-install-saltstack-debian:
   pkgrepo.managed:

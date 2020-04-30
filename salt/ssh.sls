@@ -4,10 +4,8 @@
 {% if salt_settings.install_packages %}
 ensure-salt-ssh-is-installed:
   pkg.installed:
-    - name: {{ salt_settings.salt_ssh }}
-  {%- if salt_settings.version is defined %}
-    - version: {{ salt_settings.version }}
-  {%- endif %}
+    - pkgs:
+      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
 {% endif %}
 
 ensure-roster-config:
