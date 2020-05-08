@@ -7,7 +7,7 @@ salt-api:
 {% if salt_settings.install_packages %}
   pkg.installed:
     - pkgs:
-      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
+      - {{ salt_settings.salt_api }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
 {% endif %}
 {% if salt_settings.api_service_details.state != 'ignore' %}
   service.{{ salt_settings.api_service_details.state }}:

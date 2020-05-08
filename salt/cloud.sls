@@ -21,7 +21,7 @@ salt-cloud-pip-packages:
 salt-cloud:
   pkg.installed:
     - pkgs:
-      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
+      - {{ salt_settings.salt_cloud }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
     {%- if salt_settings.use_pip %}
     - require:
       - pip: salt-cloud-pip-packages

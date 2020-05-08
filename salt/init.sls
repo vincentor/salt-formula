@@ -10,10 +10,10 @@ include:
       {%- if salt['pillar.get']("salt_master_install", False) or salt['pillar.get']('salt:master:install', False)%}
   - salt.master
       {%- endif %}
-      {%- if salt['pillar.get']("salt_master_install", False) or salt['pillar.get']('salt:cloud', False) %}
+      {%- if salt['pillar.get']("salt_cloud_install", False) or salt['pillar.get']('salt:cloud', False) %}
   - salt.cloud
       {%- endif %}
-      {%- if salt['pillar.get']("salt_ssh_roster_install", False) or salt['pillar.get']('salt:ssh_roster', False) %}
+      {%- if salt['pillar.get']("salt_ssh_install", False) or salt['pillar.get']('salt:ssh_install', False) %}
   - salt.ssh
       {%- endif %}
       {%- if salt['pillar.get']("salt_minion_install", False) or salt['pillar.get']('salt:minion:install', False) %}
