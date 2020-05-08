@@ -5,7 +5,7 @@
 ensure-salt-ssh-is-installed:
   pkg.installed:
     - pkgs:
-      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
+      - {{ salt_settings.salt_ssh }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
 {% endif %}
 
 ensure-roster-config:

@@ -11,7 +11,7 @@ salt-master:
 {% if salt_settings.install_packages %}
   pkg.installed:
     - pkgs:
-      - {{ salt_settings.salt_minion }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
+      - {{ salt_settings.salt_master }}{%-if salt_settings.version %}: '{{ salt_settings.version }}' {%- endif %}
 {% if salt_settings.master_service_details.state != 'ignore' %}
     - require_in:
       - service: salt-master
