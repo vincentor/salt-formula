@@ -8,15 +8,40 @@ install_require_pkgs:
       - python-apt
     - order: 1
 
+#setup proxy
+{%set idc = salt['grains.get']("idc", "")%}
+{%set http_proxy=salt_settings.get("http_proxy", {}).get(idc, "") %}
+{%set https_proxy=salt_settings.get("https_proxy", {}).get(idc, "")%}
+
+{%if idc %}
+{%if http_proxy%}
+http_proxy:
+  environ.setenv:
+    - value: {{ http_proxy }}
+{%endif%}
+
+{%if https_proxy%}
+https_proxy:
+  environ.setenv:
+    - value: {{ https_proxy }}
+{%endif%}
+{%endif%}
 salt-pkgrepo-install-saltstack-debian:
   pkgrepo.managed:
     - humanname: SaltStack Debian Repo
     - name: {{ salt_settings.pkgrepo }}
     - file: /etc/apt/sources.list.d/saltstack.list
     - key_url: {{ salt_settings.key_url }}
+    - backend: requests
     - clean_file: True
     # Order: 1 because we can't put a require_in on "pkg: salt-{master,minion}"
     # because we don't know if they are used.
     - order: 1
     - require:
       - pkg: install_require_pkgs
+{%-if http_proxy %}
+      - environ: http_proxy
+{%-endif%}
+{%-if https_proxy %}
+      - environ: https_proxy
+{%-endif%}

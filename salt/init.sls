@@ -10,7 +10,9 @@ include:
       {%- if salt['pillar.get']("salt_master_install", False) or salt['pillar.get']('salt:master:install', False)%}
   - salt.master
   - salt.ssh
+  - salt.api
   - salt.custom.clustershell
+  - salt.custom.saltapi
       {%- endif %}
       {%- if salt['pillar.get']("salt_cloud_install", False) or salt['pillar.get']('salt:cloud', False) %}
   - salt.cloud
