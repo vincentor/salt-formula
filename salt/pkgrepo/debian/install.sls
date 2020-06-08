@@ -8,10 +8,36 @@ install_require_pkgs:
       - python-apt
     - order: 1
 
+install_pip:
+  pkg.latest:
+    - name: python-pip
+    - order: 1
+
+install_lsb_release:
+  pkg.latest:
+    - name: lsb-release
+    - order: 1
+
+install_gnupg:
+  pkg.installed:
+    - name: gnupg
+    - order: 1
+
+
 #setup proxy
 {%set idc = salt['grains.get']("idc", "")%}
 {%set http_proxy=salt_settings.get("http_proxy", {}).get(idc, "") %}
 {%set https_proxy=salt_settings.get("https_proxy", {}).get(idc, "")%}
+
+install_requests:
+  pip.installed:
+    - name: requests
+{%- if http_proxy %}
+    - proxy: {{http_proxy}}
+{%-endif%}
+    - require:
+      - pkg: install_pip
+    - order: 1
 
 {%if idc %}
 {%if http_proxy%}
@@ -39,6 +65,8 @@ salt-pkgrepo-install-saltstack-debian:
     - order: 1
     - require:
       - pkg: install_require_pkgs
+      - pkg: install_lsb_release
+      - pkg: install_gnupg
 {%-if http_proxy %}
       - environ: http_proxy
 {%-endif%}
