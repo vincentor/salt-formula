@@ -1,0 +1,10 @@
+{%if http_proxy or https_proxy %}
+Acquire {
+{%if http_proxy%}
+  HTTP::proxy "{{http_proxy}}";
+{%endif%}
+{%if https_proxy%}
+  HTTPS::proxy "{{https_proxy}}";
+{%endif%}
+}
+{%endif%}

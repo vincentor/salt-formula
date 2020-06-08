@@ -2,6 +2,23 @@
 # vim: ft=sls
 {% from "salt/map.jinja" import salt_settings with context %}
 
+#setup proxy
+{%set idc = salt['grains.get']("idc", "")%}
+{%set http_proxy=salt_settings.get("http_proxy", {}).get(idc, "") %}
+{%set https_proxy=salt_settings.get("https_proxy", {}).get(idc, "")%}
+
+{%-if http_proxy or https_proxy %}
+setup_apt_proxy:
+  file.managed:
+    - name: /etc/apt/apt.conf.d/30aptproxy
+    - template: jinja
+    - source: salt://salt/files/aptproxy
+    - order: 1
+    - context:
+      http_proxy: {{ http_proxy }}
+      https_proxy: {{ https_proxy }}
+{%-endif%}
+
 install_require_pkgs:
   pkg.installed:
     - names:
@@ -22,12 +39,6 @@ install_gnupg:
   pkg.installed:
     - name: gnupg
     - order: 1
-
-
-#setup proxy
-{%set idc = salt['grains.get']("idc", "")%}
-{%set http_proxy=salt_settings.get("http_proxy", {}).get(idc, "") %}
-{%set https_proxy=salt_settings.get("https_proxy", {}).get(idc, "")%}
 
 install_requests:
   pip.installed:
