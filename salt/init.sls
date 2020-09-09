@@ -13,6 +13,7 @@ include:
   - salt.api
   - salt.custom.clustershell
   - salt.custom.saltapi
+  - salt.custom.masterdir
       {%- endif %}
       {%- if salt['pillar.get']("salt_cloud_install", False) or salt['pillar.get']('salt:cloud', False) %}
   - salt.cloud
